@@ -2,8 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.NewsApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-
     <style name="Theme.NewsApp" parent="Base.Theme.NewsApp" />
+    <style name="NavDrawerTextAppearance" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+    </style>
 </resources>
+
