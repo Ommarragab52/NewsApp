@@ -1,21 +1,28 @@
 package com.example.newsapp.ui
 
 import android.os.Bundle
-import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.window.OnBackInvokedDispatcher
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityMainBinding
-import com.example.newsapp.ui.categories.CategoriesFragment
-import com.example.newsapp.ui.settings.SettingsFragment
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewbinding:ActivityMainBinding
+    private lateinit var viewbinding: ActivityMainBinding
+    private lateinit var navHost: NavHost
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,37 +30,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewbinding.root)
         handleAppbar()
         handleDrawer()
-        showFragment(CategoriesFragment())
     }
 
-    private fun handleDrawer() {
-
-        viewbinding.navigationDrawer.setNavigationItemSelectedListener {menuItem ->
-            when(menuItem.itemId){
-                R.id.categories -> {
-                    showFragment(CategoriesFragment())
-                    viewbinding.drawerLayout.closeDrawers()
-                    (GravityCompat.START)
-                }
-                R.id.settings -> {
-                    showFragment(SettingsFragment())
-                    viewbinding.drawerLayout.closeDrawers()
-                    (GravityCompat.START)
-                }
-            }
-            true
-        }
-
-
-    }
     private fun handleAppbar() {
         setSupportActionBar(viewbinding.topAppBar)
-        viewbinding.topAppBar.setNavigationOnClickListener { viewbinding.drawerLayout.open() }
     }
-    private fun showFragment(fragment :Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container,fragment)
-            .commit()
+    private fun handleDrawer() {
+        drawerLayout = viewbinding.drawerLayout
+        navView = viewbinding.navigationDrawer
+        navHost =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        navController = navHost.navController
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.categoriesFragment,
+                R.id.settingsFragment
+            ), drawerLayout
+        )
+        NavigationUI.setupActionBarWithNavController(this,navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(navView,navController)
     }
+    override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+
 }

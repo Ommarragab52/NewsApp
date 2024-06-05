@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الاخبار</string>
+    <string name="language">اللفة</string>
+    <string name="arabic">العربية</string>
+    <string name="english">الانجلزية</string>
+</resources>

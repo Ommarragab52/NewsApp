@@ -12,5 +12,8 @@
     <style name="NavDrawerTextAppearance" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">24sp</item>
     </style>
+    <style name="TabTextAppearance" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
 

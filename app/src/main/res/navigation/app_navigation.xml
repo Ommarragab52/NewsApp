@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/categoriesFragment">
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.example.newsapp.ui.categories.CategoriesFragment"
+        android:label="News App"
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_categoriesFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.newsapp.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.newsapp.ui.news.NewsFragment"
+        tools:layout="@layout/fragment_news">
+
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_newsFragment_to_detalsFragment"
+            app:destination="@id/detalsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalsFragment"
+        android:name="com.example.newsapp.ui.detailsFragment.DetailsFragment"
+        android:label="fragment_detals"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="article"
+            app:argType="com.example.newsapp.network.model.articles.Article" />
+    </fragment>
+</navigation>
