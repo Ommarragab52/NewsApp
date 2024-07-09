@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.domain.model.Article
 import com.example.newsapp.databinding.ItemArticleBinding
-import com.example.newsapp.network.model.articles.Article
 
 class ArticlesAdapter(private var articles: List<Article?>? = null) :
     Adapter<ArticlesAdapter.ArticlesViewHolder>() {
-    class ArticlesViewHolder( val itemArticleBinding: ItemArticleBinding) :
+    class ArticlesViewHolder(val itemArticleBinding: ItemArticleBinding) :
         ViewHolder(itemArticleBinding.root) {
         fun bind(article: Article) {
-            itemArticleBinding.articleModel = article
+            itemArticleBinding.article = article
             itemArticleBinding.invalidateAll()
         }
 
@@ -34,10 +34,13 @@ class ArticlesAdapter(private var articles: List<Article?>? = null) :
         }
 
     }
-    var onArticleClickListener:OnArticleClickListener?=null
-    fun interface OnArticleClickListener{
+
+    var onArticleClickListener: OnArticleClickListener? = null
+
+    fun interface OnArticleClickListener {
         fun onClick(article: Article)
     }
+
     override fun getItemCount(): Int {
         return articles?.size ?: 0
     }

@@ -27,16 +27,16 @@
             android:name="category"
             app:argType="string" />
         <action
-            android:id="@+id/action_newsFragment_to_detalsFragment"
-            app:destination="@id/detalsFragment" />
+            android:id="@+id/action_newsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detalsFragment"
+        android:id="@+id/detailsFragment"
         android:name="com.example.newsapp.ui.detailsFragment.DetailsFragment"
-        android:label="fragment_detals"
+        android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="article"
-            app:argType="com.example.newsapp.network.model.articles.Article" />
+            app:argType="com.example.domain.model.Article" />
     </fragment>
 </navigation>

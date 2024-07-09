@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.domain.model.Source
 import com.example.newsapp.databinding.FragmentNewsBinding
-import com.example.newsapp.network.model.articles.Article
-import com.example.newsapp.network.model.sources.Source
 import com.example.newsapp.ui.CONSTANTS
 import com.example.newsapp.ui.showMessage
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
     private lateinit var viewBinding: FragmentNewsBinding
     private var category: String? = null
@@ -24,8 +23,9 @@ class NewsFragment : Fragment() {
     private lateinit var viewModel: NewsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
+        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +38,8 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         category = arguments?.getString(CONSTANTS.CATEGORY)
-       (requireContext() as AppCompatActivity).supportActionBar?.title = category?.replaceFirstChar { it.uppercase() }
+        val activity = requireActivity() as? AppCompatActivity
+        activity?.supportActionBar?.title = category?.replaceFirstChar { it.uppercase() }
         initViews()
         initObservers()
         viewModel.getSources(category)
@@ -46,9 +47,9 @@ class NewsFragment : Fragment() {
     }
 
     private fun onArticleClick() {
-        adapter.onArticleClickListener = ArticlesAdapter.OnArticleClickListener {article->
-            val action = NewsFragmentDirections.actionNewsFragmentToDetalsFragment(article)
-           findNavController().navigate(action)
+        adapter.onArticleClickListener = ArticlesAdapter.OnArticleClickListener { article ->
+            val action = NewsFragmentDirections.actionNewsFragmentToDetailsFragment(article = article)
+            findNavController().navigate(action)
         }
     }
 
@@ -57,24 +58,23 @@ class NewsFragment : Fragment() {
 //        ) {
 //            viewBinding.progressBar.isVisible = it
 //        }
-        viewModel.sourcesList.observe(viewLifecycleOwner){
+        viewModel.sourcesList.observe(viewLifecycleOwner) {
             bindTabs(it)
         }
-        viewModel.articlesList.observe(viewLifecycleOwner){
+        viewModel.articlesList.observe(viewLifecycleOwner) {
             adapter.updateData(it)
         }
-        viewModel.showError.observe(viewLifecycleOwner){
+        viewModel.showError.observe(viewLifecycleOwner) {
             handleError(it)
         }
     }
 
     private fun initViews() {
         viewBinding.viewModel = viewModel
-        viewBinding.lifecycleOwner= this
+        viewBinding.lifecycleOwner = this
         adapter = ArticlesAdapter()
         viewBinding.recyclerView.adapter = adapter
     }
-
 
 
     private fun bindTabs(sources: List<Source?>?) {

@@ -15,7 +15,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var viewbinding: ActivityMainBinding
     private lateinit var navHost: NavHost

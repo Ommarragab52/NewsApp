@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.domain.model.Article
 import com.example.newsapp.databinding.FragmentDetailsBinding
-import com.example.newsapp.network.model.articles.Article
 
 
 class DetailsFragment : Fragment() {
